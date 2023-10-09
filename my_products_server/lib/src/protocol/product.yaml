@@ -1,0 +1,9 @@
+class: Product
+table: product
+fields:
+  name: String
+  image: String
+  price: double
+  createdOn: DateTime
+  isLiked: bool
+  noOfItems: int

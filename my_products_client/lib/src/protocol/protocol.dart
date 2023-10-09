@@ -9,7 +9,9 @@ library protocol; // ignore_for_file: no_leading_underscores_for_library_prefixe
 
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'example.dart' as _i2;
+import 'product.dart' as _i3;
 export 'example.dart';
+export 'product.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -33,8 +35,14 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.Example) {
       return _i2.Example.fromJson(data, this) as T;
     }
+    if (t == _i3.Product) {
+      return _i3.Product.fromJson(data, this) as T;
+    }
     if (t == _i1.getType<_i2.Example?>()) {
       return (data != null ? _i2.Example.fromJson(data, this) : null) as T;
+    }
+    if (t == _i1.getType<_i3.Product?>()) {
+      return (data != null ? _i3.Product.fromJson(data, this) : null) as T;
     }
     return super.deserialize<T>(data, t);
   }
@@ -44,6 +52,9 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i2.Example) {
       return 'Example';
     }
+    if (data is _i3.Product) {
+      return 'Product';
+    }
     return super.getClassNameForObject(data);
   }
 
@@ -51,6 +62,9 @@ class Protocol extends _i1.SerializationManager {
   dynamic deserializeByClassName(Map<String, dynamic> data) {
     if (data['className'] == 'Example') {
       return deserialize<_i2.Example>(data['data']);
+    }
+    if (data['className'] == 'Product') {
+      return deserialize<_i3.Product>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
