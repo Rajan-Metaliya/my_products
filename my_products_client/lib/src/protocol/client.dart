@@ -8,8 +8,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'dart:io' as _i3;
-import 'protocol.dart' as _i4;
+import 'package:my_products_client/src/protocol/product.dart' as _i3;
+import 'dart:io' as _i4;
+import 'protocol.dart' as _i5;
 
 class _EndpointExample extends _i1.EndpointRef {
   _EndpointExample(_i1.EndpointCaller caller) : super(caller);
@@ -24,24 +25,71 @@ class _EndpointExample extends _i1.EndpointRef {
       );
 }
 
+class _EndpointProduct extends _i1.EndpointRef {
+  _EndpointProduct(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'product';
+
+  _i2.Future<List<_i3.Product>> getAllProducts() =>
+      caller.callServerEndpoint<List<_i3.Product>>(
+        'product',
+        'getAllProducts',
+        {},
+      );
+
+  _i2.Future<_i3.Product?> getProductById(int id) =>
+      caller.callServerEndpoint<_i3.Product?>(
+        'product',
+        'getProductById',
+        {'id': id},
+      );
+
+  _i2.Future<bool> insertProduct(_i3.Product product) =>
+      caller.callServerEndpoint<bool>(
+        'product',
+        'insertProduct',
+        {'product': product},
+      );
+
+  _i2.Future<bool> updateProduct(_i3.Product product) =>
+      caller.callServerEndpoint<bool>(
+        'product',
+        'updateProduct',
+        {'product': product},
+      );
+
+  _i2.Future<bool> deleteProduct(int id) => caller.callServerEndpoint<bool>(
+        'product',
+        'deleteProduct',
+        {'id': id},
+      );
+}
+
 class Client extends _i1.ServerpodClient {
   Client(
     String host, {
-    _i3.SecurityContext? context,
+    _i4.SecurityContext? context,
     _i1.AuthenticationKeyManager? authenticationKeyManager,
   }) : super(
           host,
-          _i4.Protocol(),
+          _i5.Protocol(),
           context: context,
           authenticationKeyManager: authenticationKeyManager,
         ) {
     example = _EndpointExample(this);
+    product = _EndpointProduct(this);
   }
 
   late final _EndpointExample example;
 
+  late final _EndpointProduct product;
+
   @override
-  Map<String, _i1.EndpointRef> get endpointRefLookup => {'example': example};
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+        'example': example,
+        'product': product,
+      };
 
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {};

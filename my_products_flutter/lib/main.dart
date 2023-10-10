@@ -1,6 +1,8 @@
-import 'package:my_products_client/my_products_client.dart';
 import 'package:flutter/material.dart';
+import 'package:my_products_client/my_products_client.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
+
+import 'screens/product_list_screen.dart';
 
 // Sets up a singleton client object that can be used to talk to the server from
 // anywhere in our app. The client is generated from your server code.
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Serverpod Example'),
+      home: const ProductList(),
     );
   }
 }
